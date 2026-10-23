@@ -1,0 +1,35 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "LeastPrivilegeDynamodb1",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:us-east-1:998877665544:table/ProdOrderLedger"
+      ]
+    },
+    {
+      "Sid": "LeastPrivilegeS32",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::acme-prod-orders-998877665544/*"
+      ]
+    },
+    {
+      "Sid": "LeastPrivilegeSqs3",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:SendMessage"
+      ],
+      "Resource": [
+        "arn:aws:sqs:us-east-1:998877665544:order-settlement-queue"
+      ]
+    }
+  ]
+}

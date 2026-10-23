@@ -1,0 +1,262 @@
+{
+  "account_id": "998877665544",
+  "users": [
+    {
+      "UserName": "ci-deploy-bot",
+      "Arn": "arn:aws:iam::998877665544:user/ci-deploy-bot",
+      "PasswordEnabled": false,
+      "MFADevices": [],
+      "AccessKeys": [
+        {
+          "AccessKeyId": "AKIAIOSFODNN7STALE01",
+          "Status": "Active",
+          "CreateDate": "2025-11-10T08:30:00Z",
+          "LastUsedDate": "2026-04-01T14:20:00Z"
+        }
+      ],
+      "AttachedPolicies": [
+        "arn:aws:iam::998877665544:policy/CustomPolicyManager"
+      ],
+      "InlinePolicies": {}
+    },
+    {
+      "UserName": "junior-dev-alex",
+      "Arn": "arn:aws:iam::998877665544:user/junior-dev-alex",
+      "PasswordEnabled": true,
+      "MFADevices": [],
+      "AccessKeys": [
+        {
+          "AccessKeyId": "AKIAIOSFODNN7NEVER02",
+          "Status": "Active",
+          "CreateDate": "2026-05-15T10:00:00Z",
+          "LastUsedDate": null
+        }
+      ],
+      "AttachedPolicies": [],
+      "InlinePolicies": {
+        "PassRoleAndLambdaDeploy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "iam:PassRole",
+                "lambda:CreateFunction",
+                "lambda:InvokeFunction"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "UserName": "helpdesk-support",
+      "Arn": "arn:aws:iam::998877665544:user/helpdesk-support",
+      "PasswordEnabled": true,
+      "MFADevices": [],
+      "AccessKeys": [],
+      "AttachedPolicies": [],
+      "InlinePolicies": {
+        "UserPolicyAttachment": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "iam:AttachUserPolicy",
+                "iam:ListPolicies"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "UserName": "secops-auditor",
+      "Arn": "arn:aws:iam::998877665544:user/secops-auditor",
+      "PasswordEnabled": true,
+      "MFADevices": [
+        "arn:aws:iam::998877665544:mfa/secops-auditor"
+      ],
+      "AccessKeys": [
+        {
+          "AccessKeyId": "AKIAIOSFODNN7FRESH03",
+          "Status": "Active",
+          "CreateDate": "2026-10-01T09:00:00Z",
+          "LastUsedDate": "2026-10-22T17:45:00Z"
+        }
+      ],
+      "AttachedPolicies": [],
+      "InlinePolicies": {
+        "ReadOnlySecurityAudit": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "iam:Get*",
+                "iam:List*",
+                "cloudtrail:LookupEvents"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "RoleName": "AppDataProcessorRole",
+      "Arn": "arn:aws:iam::998877665544:role/AppDataProcessorRole",
+      "CreateDate": "2026-01-15T12:00:00Z",
+      "LastUsedDate": "2026-10-22T19:15:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "AttachedPolicies": [
+        "arn:aws:iam::998877665544:policy/OverpermissiveDataWildcard"
+      ],
+      "InlinePolicies": {}
+    },
+    {
+      "RoleName": "LambdaAdminExecRole",
+      "Arn": "arn:aws:iam::998877665544:role/LambdaAdminExecRole",
+      "CreateDate": "2026-02-01T10:00:00Z",
+      "LastUsedDate": "2026-10-21T11:30:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "AttachedPolicies": [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ],
+      "InlinePolicies": {}
+    },
+    {
+      "RoleName": "LegacyVendorCrossAccountRole",
+      "Arn": "arn:aws:iam::998877665544:role/LegacyVendorCrossAccountRole",
+      "CreateDate": "2025-09-01T00:00:00Z",
+      "LastUsedDate": "2026-03-10T08:00:00Z",
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:root"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "AttachedPolicies": [],
+      "InlinePolicies": {
+        "VendorFullS3AndIAM": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:*",
+                "iam:*"
+              ],
+              "Resource": "*"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RoleName": "DeprecatedMigrationRole",
+      "Arn": "arn:aws:iam::998877665544:role/DeprecatedMigrationRole",
+      "CreateDate": "2025-12-01T00:00:00Z",
+      "LastUsedDate": null,
+      "AssumeRolePolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      },
+      "AttachedPolicies": [],
+      "InlinePolicies": {
+        "FullWildcard": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "*",
+              "Resource": "*"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "managed_policies": {
+    "arn:aws:iam::998877665544:policy/OverpermissiveDataWildcard": {
+      "PolicyName": "OverpermissiveDataWildcard",
+      "Arn": "arn:aws:iam::998877665544:policy/OverpermissiveDataWildcard",
+      "DefaultVersionId": "v1",
+      "Document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "BroadWildcards",
+            "Effect": "Allow",
+            "Action": [
+              "s3:*",
+              "dynamodb:*",
+              "sqs:*",
+              "secretsmanager:*"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+    },
+    "arn:aws:iam::998877665544:policy/CustomPolicyManager": {
+      "PolicyName": "CustomPolicyManager",
+      "Arn": "arn:aws:iam::998877665544:policy/CustomPolicyManager",
+      "DefaultVersionId": "v1",
+      "Document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "AllowPolicyVersionManagement",
+            "Effect": "Allow",
+            "Action": [
+              "iam:CreatePolicyVersion",
+              "iam:SetDefaultPolicyVersion",
+              "iam:ListPolicyVersions"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+    }
+  }
+}

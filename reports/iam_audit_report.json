@@ -1,0 +1,641 @@
+{
+  "summary": {
+    "account_id": "998877665544",
+    "generated_at": "2026-10-23T05:56:31.183955+00:00",
+    "risk_score": 100,
+    "raw_risk_points": 494,
+    "posture_rating": "CRITICAL RISK (Grade: F)",
+    "total_findings": 16,
+    "severity_breakdown": {
+      "CRITICAL": 8,
+      "HIGH": 6,
+      "MEDIUM": 2,
+      "LOW": 0
+    },
+    "category_breakdown": {
+      "WILDCARD_POLICY": 4,
+      "UNUSED_ROLE": 2,
+      "UNUSED_ACCESS_KEY": 2,
+      "MISSING_MFA": 2,
+      "RISKY_TRUST_POLICY": 2,
+      "PRIV_ESC_PATH": 4
+    },
+    "escalation_paths_count": 4,
+    "least_privilege_policies_generated": 2,
+    "remediation_actions_count": 4
+  },
+  "findings": [
+    {
+      "finding_id": "WLD-001",
+      "category": "WILDCARD_POLICY",
+      "severity": "HIGH",
+      "principal_type": "Policy",
+      "principal_name": "OverpermissiveDataWildcard",
+      "principal_arn": "arn:aws:iam::998877665544:policy/OverpermissiveDataWildcard",
+      "title": "Service-Level Wildcard (s3:*, dynamodb:*, sqs:*, secretsmanager:*) on '*' in ManagedPolicy:OverpermissiveDataWildcard",
+      "description": "Policy 'OverpermissiveDataWildcard' grants broad wildcard actions (s3:*, dynamodb:*, sqs:*, secretsmanager:*) across all resources ('*') in ManagedPolicy:OverpermissiveDataWildcard.",
+      "evidence": {
+        "policy": "ManagedPolicy:OverpermissiveDataWildcard",
+        "wildcard_actions": [
+          "s3:*",
+          "dynamodb:*",
+          "sqs:*",
+          "secretsmanager:*"
+        ],
+        "statement": {
+          "Sid": "BroadWildcards",
+          "Effect": "Allow",
+          "Action": [
+            "s3:*",
+            "dynamodb:*",
+            "sqs:*",
+            "secretsmanager:*"
+          ],
+          "Resource": "*"
+        }
+      },
+      "remediation": "Scope actions to exact API calls and restrict Resource ARNs to specific buckets, tables, or roles.",
+      "cis_benchmark": "CIS AWS Foundations 1.16"
+    },
+    {
+      "finding_id": "WLD-002",
+      "category": "WILDCARD_POLICY",
+      "severity": "CRITICAL",
+      "principal_type": "Role",
+      "principal_name": "LambdaAdminExecRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/LambdaAdminExecRole",
+      "title": "Full AdministratorAccess Managed Policy attached to Role 'LambdaAdminExecRole'",
+      "description": "Role 'LambdaAdminExecRole' has AWS-managed 'AdministratorAccess' attached, granting unrestricted full administrative control across all AWS resources.",
+      "evidence": {
+        "AttachedPolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+      },
+      "remediation": "Replace AdministratorAccess with scoped least-privilege policies derived from CloudTrail.",
+      "cis_benchmark": "CIS AWS Foundations 1.16"
+    },
+    {
+      "finding_id": "WLD-003",
+      "category": "WILDCARD_POLICY",
+      "severity": "CRITICAL",
+      "principal_type": "Role",
+      "principal_name": "LegacyVendorCrossAccountRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/LegacyVendorCrossAccountRole",
+      "title": "Service-Level Wildcard (s3:*, iam:*) on '*' in InlinePolicy:VendorFullS3AndIAM",
+      "description": "Role 'LegacyVendorCrossAccountRole' grants broad wildcard actions (s3:*, iam:*) across all resources ('*') in InlinePolicy:VendorFullS3AndIAM.",
+      "evidence": {
+        "policy": "InlinePolicy:VendorFullS3AndIAM",
+        "wildcard_actions": [
+          "s3:*",
+          "iam:*"
+        ],
+        "statement": {
+          "Effect": "Allow",
+          "Action": [
+            "s3:*",
+            "iam:*"
+          ],
+          "Resource": "*"
+        }
+      },
+      "remediation": "Scope actions to exact API calls and restrict Resource ARNs to specific buckets, tables, or roles.",
+      "cis_benchmark": "CIS AWS Foundations 1.16"
+    },
+    {
+      "finding_id": "WLD-004",
+      "category": "WILDCARD_POLICY",
+      "severity": "CRITICAL",
+      "principal_type": "Role",
+      "principal_name": "DeprecatedMigrationRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/DeprecatedMigrationRole",
+      "title": "Full Administrative Wildcard (*:*) in InlinePolicy:FullWildcard",
+      "description": "Role 'DeprecatedMigrationRole' grants Action '*' on Resource '*' via InlinePolicy:FullWildcard, providing unrestricted administrative control across all AWS services.",
+      "evidence": {
+        "policy": "InlinePolicy:FullWildcard",
+        "statement": {
+          "Effect": "Allow",
+          "Action": "*",
+          "Resource": "*"
+        }
+      },
+      "remediation": "Replace '*' actions and resources with scoped service-level permissions generated from CloudTrail history.",
+      "cis_benchmark": "CIS AWS Foundations 1.16"
+    },
+    {
+      "finding_id": "ROL-005",
+      "category": "UNUSED_ROLE",
+      "severity": "MEDIUM",
+      "principal_type": "Role",
+      "principal_name": "LegacyVendorCrossAccountRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/LegacyVendorCrossAccountRole",
+      "title": "Stale IAM Role Inactive for 227 Days",
+      "description": "Role 'LegacyVendorCrossAccountRole' has not been assumed for 227 days (threshold: 90 days).",
+      "evidence": {
+        "LastUsedDate": "2026-03-10T08:00:00Z",
+        "InactiveDays": 227
+      },
+      "remediation": "Review and decommission stale role 'LegacyVendorCrossAccountRole'.",
+      "cis_benchmark": "CIS AWS Foundations 1.12"
+    },
+    {
+      "finding_id": "ROL-006",
+      "category": "UNUSED_ROLE",
+      "severity": "MEDIUM",
+      "principal_type": "Role",
+      "principal_name": "DeprecatedMigrationRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/DeprecatedMigrationRole",
+      "title": "Dormant IAM Role Never Used (326 days old)",
+      "description": "Role 'DeprecatedMigrationRole' was created 326 days ago and has never been assumed.",
+      "evidence": {
+        "CreateDate": "2025-12-01T00:00:00Z",
+        "LastUsedDate": null,
+        "AgeDays": 326
+      },
+      "remediation": "Detach policies and delete unused role 'DeprecatedMigrationRole' after owner verification.",
+      "cis_benchmark": "CIS AWS Foundations 1.12"
+    },
+    {
+      "finding_id": "KEY-007",
+      "category": "UNUSED_ACCESS_KEY",
+      "severity": "HIGH",
+      "principal_type": "User",
+      "principal_name": "ci-deploy-bot",
+      "principal_arn": "arn:aws:iam::998877665544:user/ci-deploy-bot",
+      "title": "Stale Access Key (AKIAIOSFODNN7STALE01) Unused for 204 Days",
+      "description": "User 'ci-deploy-bot' has an active access key 'AKIAIOSFODNN7STALE01' last used 204 days ago (created 347 days ago).",
+      "evidence": {
+        "AccessKeyId": "AKIAIOSFODNN7STALE01",
+        "LastUsedDate": "2026-04-01T14:20:00Z",
+        "InactiveDays": 204,
+        "AgeDays": 347
+      },
+      "remediation": "aws iam update-access-key --user-name ci-deploy-bot --access-key-id AKIAIOSFODNN7STALE01 --status Inactive",
+      "cis_benchmark": "CIS AWS Foundations 1.12 / 1.14"
+    },
+    {
+      "finding_id": "KEY-008",
+      "category": "UNUSED_ACCESS_KEY",
+      "severity": "HIGH",
+      "principal_type": "User",
+      "principal_name": "junior-dev-alex",
+      "principal_arn": "arn:aws:iam::998877665544:user/junior-dev-alex",
+      "title": "Active Access Key (AKIAIOSFODNN7NEVER02) Never Used (161 days old)",
+      "description": "User 'junior-dev-alex' has an active access key 'AKIAIOSFODNN7NEVER02' created 161 days ago that has never been used.",
+      "evidence": {
+        "AccessKeyId": "AKIAIOSFODNN7NEVER02",
+        "CreateDate": "2026-05-15T10:00:00Z",
+        "LastUsedDate": null,
+        "AgeDays": 161
+      },
+      "remediation": "aws iam update-access-key --user-name junior-dev-alex --access-key-id AKIAIOSFODNN7NEVER02 --status Inactive",
+      "cis_benchmark": "CIS AWS Foundations 1.12 / 1.14"
+    },
+    {
+      "finding_id": "MFA-009",
+      "category": "MISSING_MFA",
+      "severity": "HIGH",
+      "principal_type": "User",
+      "principal_name": "junior-dev-alex",
+      "principal_arn": "arn:aws:iam::998877665544:user/junior-dev-alex",
+      "title": "Console User 'junior-dev-alex' Lacks Multi-Factor Authentication (MFA)",
+      "description": "IAM User 'junior-dev-alex' has an active console password login profile without any registered virtual or hardware MFA device.",
+      "evidence": {
+        "PasswordEnabled": true,
+        "MFADevices": []
+      },
+      "remediation": "Enforce MFA via IAM condition 'aws:MultiFactorAuthPresent' and enroll MFA for 'junior-dev-alex'.",
+      "cis_benchmark": "CIS AWS Foundations 1.10"
+    },
+    {
+      "finding_id": "MFA-010",
+      "category": "MISSING_MFA",
+      "severity": "HIGH",
+      "principal_type": "User",
+      "principal_name": "helpdesk-support",
+      "principal_arn": "arn:aws:iam::998877665544:user/helpdesk-support",
+      "title": "Console User 'helpdesk-support' Lacks Multi-Factor Authentication (MFA)",
+      "description": "IAM User 'helpdesk-support' has an active console password login profile without any registered virtual or hardware MFA device.",
+      "evidence": {
+        "PasswordEnabled": true,
+        "MFADevices": []
+      },
+      "remediation": "Enforce MFA via IAM condition 'aws:MultiFactorAuthPresent' and enroll MFA for 'helpdesk-support'.",
+      "cis_benchmark": "CIS AWS Foundations 1.10"
+    },
+    {
+      "finding_id": "TRS-011",
+      "category": "RISKY_TRUST_POLICY",
+      "severity": "HIGH",
+      "principal_type": "Role",
+      "principal_name": "LegacyVendorCrossAccountRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/LegacyVendorCrossAccountRole",
+      "title": "Unconstrained Cross-Account Trust on 'LegacyVendorCrossAccountRole'",
+      "description": "Role 'LegacyVendorCrossAccountRole' trusts external principal 'arn:aws:iam::111122223333:root' (especially broad ':root') without requiring 'sts:ExternalId' or 'aws:MultiFactorAuthPresent' conditions.",
+      "evidence": {
+        "ExternalPrincipal": "arn:aws:iam::111122223333:root",
+        "Condition": {}
+      },
+      "remediation": "Add a Condition block requiring sts:ExternalId and scope Principal from ':root' to a specific role ARN.",
+      "cis_benchmark": "AWS Security Incident Response Guide - Confused Deputy"
+    },
+    {
+      "finding_id": "TRS-012",
+      "category": "RISKY_TRUST_POLICY",
+      "severity": "CRITICAL",
+      "principal_type": "Role",
+      "principal_name": "DeprecatedMigrationRole",
+      "principal_arn": "arn:aws:iam::998877665544:role/DeprecatedMigrationRole",
+      "title": "Public Wildcard Principal ('*') in Trust Policy for 'DeprecatedMigrationRole'",
+      "description": "Role 'DeprecatedMigrationRole' allows ANY AWS account or principal ('*') to assume the role!",
+      "evidence": {
+        "Principal": "*",
+        "Condition": {}
+      },
+      "remediation": "Restrict AssumeRolePolicyDocument Principal to explicit trusted ARNs and require sts:ExternalId.",
+      "cis_benchmark": "AWS IAM Best Practices - Trust Policies"
+    },
+    {
+      "finding_id": "ESC-001",
+      "category": "PRIV_ESC_PATH",
+      "severity": "CRITICAL",
+      "principal_type": "User",
+      "principal_name": "ci-deploy-bot",
+      "principal_arn": "arn:aws:iam::998877665544:user/ci-deploy-bot",
+      "title": "Privilege Escalation Path to Admin via CreatePolicyVersion",
+      "description": "Principal 'User:ci-deploy-bot' can escalate to full administrative privileges through hop chain: User:ci-deploy-bot -> AWS_ACCOUNT_ADMIN using (iam:CreatePolicyVersion).",
+      "evidence": {
+        "hop_chain": [
+          "User:ci-deploy-bot",
+          "AWS_ACCOUNT_ADMIN"
+        ],
+        "vector": "CreatePolicyVersion",
+        "required_permissions": [
+          "iam:CreatePolicyVersion"
+        ]
+      },
+      "remediation": "Restrict iam:CreatePolicyVersion on 'User:ci-deploy-bot' with explicit resource ARNs and IAM Permissions Boundaries.",
+      "cis_benchmark": "MITRE ATT&CK Cloud T1078 / Rhino Security Labs IAM Escalation Matrix"
+    },
+    {
+      "finding_id": "ESC-002",
+      "category": "PRIV_ESC_PATH",
+      "severity": "CRITICAL",
+      "principal_type": "User",
+      "principal_name": "junior-dev-alex",
+      "principal_arn": "arn:aws:iam::998877665544:user/junior-dev-alex",
+      "title": "Privilege Escalation Path to Admin via PassRole+CreateFunction -> DirectAdminPolicy",
+      "description": "Principal 'User:junior-dev-alex' can escalate to full administrative privileges through hop chain: User:junior-dev-alex -> Role:LambdaAdminExecRole -> AWS_ACCOUNT_ADMIN using (iam:PassRole, lambda:CreateFunction, *:*).",
+      "evidence": {
+        "hop_chain": [
+          "User:junior-dev-alex",
+          "Role:LambdaAdminExecRole",
+          "AWS_ACCOUNT_ADMIN"
+        ],
+        "vector": "PassRole+CreateFunction -> DirectAdminPolicy",
+        "required_permissions": [
+          "iam:PassRole",
+          "lambda:CreateFunction",
+          "*:*"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole, lambda:CreateFunction, *:* on 'User:junior-dev-alex' with explicit resource ARNs and IAM Permissions Boundaries.",
+      "cis_benchmark": "MITRE ATT&CK Cloud T1078 / Rhino Security Labs IAM Escalation Matrix"
+    },
+    {
+      "finding_id": "ESC-003",
+      "category": "PRIV_ESC_PATH",
+      "severity": "CRITICAL",
+      "principal_type": "User",
+      "principal_name": "junior-dev-alex",
+      "principal_arn": "arn:aws:iam::998877665544:user/junior-dev-alex",
+      "title": "Privilege Escalation Path to Admin via PassRole+CreateFunction -> DirectAdminPolicy",
+      "description": "Principal 'User:junior-dev-alex' can escalate to full administrative privileges through hop chain: User:junior-dev-alex -> Role:DeprecatedMigrationRole -> AWS_ACCOUNT_ADMIN using (iam:PassRole, lambda:CreateFunction, *:*).",
+      "evidence": {
+        "hop_chain": [
+          "User:junior-dev-alex",
+          "Role:DeprecatedMigrationRole",
+          "AWS_ACCOUNT_ADMIN"
+        ],
+        "vector": "PassRole+CreateFunction -> DirectAdminPolicy",
+        "required_permissions": [
+          "iam:PassRole",
+          "lambda:CreateFunction",
+          "*:*"
+        ]
+      },
+      "remediation": "Restrict iam:PassRole, lambda:CreateFunction, *:* on 'User:junior-dev-alex' with explicit resource ARNs and IAM Permissions Boundaries.",
+      "cis_benchmark": "MITRE ATT&CK Cloud T1078 / Rhino Security Labs IAM Escalation Matrix"
+    },
+    {
+      "finding_id": "ESC-004",
+      "category": "PRIV_ESC_PATH",
+      "severity": "CRITICAL",
+      "principal_type": "User",
+      "principal_name": "helpdesk-support",
+      "principal_arn": "arn:aws:iam::998877665544:user/helpdesk-support",
+      "title": "Privilege Escalation Path to Admin via AttachUserPolicy",
+      "description": "Principal 'User:helpdesk-support' can escalate to full administrative privileges through hop chain: User:helpdesk-support -> AWS_ACCOUNT_ADMIN using (iam:AttachUserPolicy).",
+      "evidence": {
+        "hop_chain": [
+          "User:helpdesk-support",
+          "AWS_ACCOUNT_ADMIN"
+        ],
+        "vector": "AttachUserPolicy",
+        "required_permissions": [
+          "iam:AttachUserPolicy"
+        ]
+      },
+      "remediation": "Restrict iam:AttachUserPolicy on 'User:helpdesk-support' with explicit resource ARNs and IAM Permissions Boundaries.",
+      "cis_benchmark": "MITRE ATT&CK Cloud T1078 / Rhino Security Labs IAM Escalation Matrix"
+    }
+  ],
+  "privilege_escalation_paths": [
+    {
+      "source_principal": "User:ci-deploy-bot",
+      "target_principal": "AWS_ACCOUNT_ADMIN",
+      "vector": "CreatePolicyVersion",
+      "required_permissions": [
+        "iam:CreatePolicyVersion"
+      ],
+      "hop_chain": [
+        "User:ci-deploy-bot",
+        "AWS_ACCOUNT_ADMIN"
+      ],
+      "severity": "CRITICAL",
+      "mitigation": "Restrict iam:CreatePolicyVersion on 'User:ci-deploy-bot' with explicit resource ARNs and IAM Permissions Boundaries."
+    },
+    {
+      "source_principal": "User:junior-dev-alex",
+      "target_principal": "AWS_ACCOUNT_ADMIN",
+      "vector": "PassRole+CreateFunction -> DirectAdminPolicy",
+      "required_permissions": [
+        "iam:PassRole",
+        "lambda:CreateFunction",
+        "*:*"
+      ],
+      "hop_chain": [
+        "User:junior-dev-alex",
+        "Role:LambdaAdminExecRole",
+        "AWS_ACCOUNT_ADMIN"
+      ],
+      "severity": "CRITICAL",
+      "mitigation": "Restrict iam:PassRole, lambda:CreateFunction, *:* on 'User:junior-dev-alex' with explicit resource ARNs and IAM Permissions Boundaries."
+    },
+    {
+      "source_principal": "User:junior-dev-alex",
+      "target_principal": "AWS_ACCOUNT_ADMIN",
+      "vector": "PassRole+CreateFunction -> DirectAdminPolicy",
+      "required_permissions": [
+        "iam:PassRole",
+        "lambda:CreateFunction",
+        "*:*"
+      ],
+      "hop_chain": [
+        "User:junior-dev-alex",
+        "Role:DeprecatedMigrationRole",
+        "AWS_ACCOUNT_ADMIN"
+      ],
+      "severity": "CRITICAL",
+      "mitigation": "Restrict iam:PassRole, lambda:CreateFunction, *:* on 'User:junior-dev-alex' with explicit resource ARNs and IAM Permissions Boundaries."
+    },
+    {
+      "source_principal": "User:helpdesk-support",
+      "target_principal": "AWS_ACCOUNT_ADMIN",
+      "vector": "AttachUserPolicy",
+      "required_permissions": [
+        "iam:AttachUserPolicy"
+      ],
+      "hop_chain": [
+        "User:helpdesk-support",
+        "AWS_ACCOUNT_ADMIN"
+      ],
+      "severity": "CRITICAL",
+      "mitigation": "Restrict iam:AttachUserPolicy on 'User:helpdesk-support' with explicit resource ARNs and IAM Permissions Boundaries."
+    }
+  ],
+  "least_privilege_suggestions": [
+    {
+      "role_name": "AppDataProcessorRole",
+      "role_arn": "arn:aws:iam::998877665544:role/AppDataProcessorRole",
+      "observed_event_count": 3,
+      "current_wildcard_actions": [
+        "dynamodb:*",
+        "s3:*",
+        "secretsmanager:*",
+        "sqs:*"
+      ],
+      "generated_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "LeastPrivilegeDynamodb1",
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:PutItem"
+            ],
+            "Resource": [
+              "arn:aws:dynamodb:us-east-1:998877665544:table/ProdOrderLedger"
+            ]
+          },
+          {
+            "Sid": "LeastPrivilegeS32",
+            "Effect": "Allow",
+            "Action": [
+              "s3:GetObject"
+            ],
+            "Resource": [
+              "arn:aws:s3:::acme-prod-orders-998877665544/*"
+            ]
+          },
+          {
+            "Sid": "LeastPrivilegeSqs3",
+            "Effect": "Allow",
+            "Action": [
+              "sqs:SendMessage"
+            ],
+            "Resource": [
+              "arn:aws:sqs:us-east-1:998877665544:order-settlement-queue"
+            ]
+          }
+        ]
+      },
+      "removed_high_risk_permissions": [
+        "Wildcard 'dynamodb:*' replaced with 3 explicit CloudTrail-verified actions",
+        "Wildcard 's3:*' replaced with 3 explicit CloudTrail-verified actions",
+        "Wildcard 'secretsmanager:*' replaced with 3 explicit CloudTrail-verified actions",
+        "Wildcard 'sqs:*' replaced with 3 explicit CloudTrail-verified actions"
+      ]
+    },
+    {
+      "role_name": "LambdaAdminExecRole",
+      "role_arn": "arn:aws:iam::998877665544:role/LambdaAdminExecRole",
+      "observed_event_count": 2,
+      "current_wildcard_actions": [
+        "*"
+      ],
+      "generated_policy": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "LeastPrivilegeS31",
+            "Effect": "Allow",
+            "Action": [
+              "s3:ListBucket"
+            ],
+            "Resource": [
+              "arn:aws:s3:::acme-audit-archive-998877665544"
+            ]
+          },
+          {
+            "Sid": "LeastPrivilegeSecretsmanager2",
+            "Effect": "Allow",
+            "Action": [
+              "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+              "arn:aws:secretsmanager:us-east-1:998877665544:secret:prod/rds/reporting-readonly*"
+            ]
+          }
+        ]
+      },
+      "removed_high_risk_permissions": [
+        "Wildcard '*' replaced with 2 explicit CloudTrail-verified actions"
+      ]
+    }
+  ],
+  "remediation_plan": [
+    {
+      "action_type": "DISABLE_ACCESS_KEY",
+      "principal_name": "ci-deploy-bot",
+      "target_id": "AKIAIOSFODNN7STALE01",
+      "dry_run": true,
+      "executed": false,
+      "status": "DRY_RUN_PLANNED",
+      "details": {
+        "api_call": "iam.update_access_key",
+        "parameters": {
+          "UserName": "ci-deploy-bot",
+          "AccessKeyId": "AKIAIOSFODNN7STALE01",
+          "Status": "Inactive"
+        },
+        "reason": "Stale Access Key (AKIAIOSFODNN7STALE01) Unused for 204 Days"
+      }
+    },
+    {
+      "action_type": "DISABLE_ACCESS_KEY",
+      "principal_name": "junior-dev-alex",
+      "target_id": "AKIAIOSFODNN7NEVER02",
+      "dry_run": true,
+      "executed": false,
+      "status": "DRY_RUN_PLANNED",
+      "details": {
+        "api_call": "iam.update_access_key",
+        "parameters": {
+          "UserName": "junior-dev-alex",
+          "AccessKeyId": "AKIAIOSFODNN7NEVER02",
+          "Status": "Inactive"
+        },
+        "reason": "Active Access Key (AKIAIOSFODNN7NEVER02) Never Used (161 days old)"
+      }
+    },
+    {
+      "action_type": "REPLACE_ROLE_POLICY",
+      "principal_name": "AppDataProcessorRole",
+      "target_id": "AppDataProcessorRole-LeastPrivilegeAutoGenerated",
+      "dry_run": true,
+      "executed": false,
+      "status": "DRY_RUN_POLICY_SUGGESTED",
+      "details": {
+        "api_call": "iam.put_role_policy",
+        "parameters": {
+          "RoleName": "AppDataProcessorRole",
+          "PolicyName": "AppDataProcessorRole-LeastPrivilegeAutoGenerated",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "LeastPrivilegeDynamodb1",
+                "Effect": "Allow",
+                "Action": [
+                  "dynamodb:PutItem"
+                ],
+                "Resource": [
+                  "arn:aws:dynamodb:us-east-1:998877665544:table/ProdOrderLedger"
+                ]
+              },
+              {
+                "Sid": "LeastPrivilegeS32",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:GetObject"
+                ],
+                "Resource": [
+                  "arn:aws:s3:::acme-prod-orders-998877665544/*"
+                ]
+              },
+              {
+                "Sid": "LeastPrivilegeSqs3",
+                "Effect": "Allow",
+                "Action": [
+                  "sqs:SendMessage"
+                ],
+                "Resource": [
+                  "arn:aws:sqs:us-east-1:998877665544:order-settlement-queue"
+                ]
+              }
+            ]
+          }
+        },
+        "wildcard_actions_removed": [
+          "dynamodb:*",
+          "s3:*",
+          "secretsmanager:*",
+          "sqs:*"
+        ],
+        "observed_cloudtrail_events": 3
+      }
+    },
+    {
+      "action_type": "REPLACE_ROLE_POLICY",
+      "principal_name": "LambdaAdminExecRole",
+      "target_id": "LambdaAdminExecRole-LeastPrivilegeAutoGenerated",
+      "dry_run": true,
+      "executed": false,
+      "status": "DRY_RUN_POLICY_SUGGESTED",
+      "details": {
+        "api_call": "iam.put_role_policy",
+        "parameters": {
+          "RoleName": "LambdaAdminExecRole",
+          "PolicyName": "LambdaAdminExecRole-LeastPrivilegeAutoGenerated",
+          "PolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Sid": "LeastPrivilegeS31",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:ListBucket"
+                ],
+                "Resource": [
+                  "arn:aws:s3:::acme-audit-archive-998877665544"
+                ]
+              },
+              {
+                "Sid": "LeastPrivilegeSecretsmanager2",
+                "Effect": "Allow",
+                "Action": [
+                  "secretsmanager:GetSecretValue"
+                ],
+                "Resource": [
+                  "arn:aws:secretsmanager:us-east-1:998877665544:secret:prod/rds/reporting-readonly*"
+                ]
+              }
+            ]
+          }
+        },
+        "wildcard_actions_removed": [
+          "*"
+        ],
+        "observed_cloudtrail_events": 2
+      }
+    }
+  ]
+}

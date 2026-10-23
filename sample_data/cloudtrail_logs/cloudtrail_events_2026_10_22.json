@@ -1,0 +1,133 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/AppDataProcessorRole/proc-lambda-01",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROA654321EXAMPLE",
+            "arn": "arn:aws:iam::998877665544:role/AppDataProcessorRole",
+            "accountId": "998877665544",
+            "userName": "AppDataProcessorRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-22T18:10:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "requestParameters": {
+        "bucketName": "acme-prod-orders-998877665544",
+        "key": "incoming/2026-10-22/batch_01.parquet"
+      }
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/AppDataProcessorRole/proc-lambda-01",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "userName": "AppDataProcessorRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-22T18:10:02Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "PutItem",
+      "awsRegion": "us-east-1",
+      "requestParameters": {
+        "tableName": "ProdOrderLedger"
+      }
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/AppDataProcessorRole/proc-lambda-01",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "userName": "AppDataProcessorRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-22T18:10:04Z",
+      "eventSource": "sqs.amazonaws.com",
+      "eventName": "SendMessage",
+      "awsRegion": "us-east-1",
+      "requestParameters": {
+        "queueUrl": "https://sqs.us-east-1.amazonaws.com/998877665544/order-settlement-queue"
+      }
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/AppDataProcessorRole/proc-lambda-01",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "userName": "AppDataProcessorRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-22T18:12:00Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "CreateUser",
+      "awsRegion": "us-east-1",
+      "errorCode": "AccessDenied",
+      "errorMessage": "User is not authorized to perform: iam:CreateUser"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/LambdaAdminExecRole/cleanup-job",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "userName": "LambdaAdminExecRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-21T11:30:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "ListBucket",
+      "awsRegion": "us-east-1",
+      "requestParameters": {
+        "bucketName": "acme-audit-archive-998877665544"
+      }
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::998877665544:assumed-role/LambdaAdminExecRole/cleanup-job",
+        "accountId": "998877665544",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "userName": "LambdaAdminExecRole"
+          }
+        }
+      },
+      "eventTime": "2026-10-21T11:30:05Z",
+      "eventSource": "secretsmanager.amazonaws.com",
+      "eventName": "GetSecretValue",
+      "awsRegion": "us-east-1",
+      "requestParameters": {
+        "secretId": "prod/rds/reporting-readonly"
+      }
+    }
+  ]
+}
